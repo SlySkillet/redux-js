@@ -1,6 +1,6 @@
-import { createStore } from 'redux'
+import { createStore, compose } from 'redux'
 import rootReducer from './reducer'
-
+import { sayHiOnDispatch, includeMeaningOfLife } from './addons/enhancers'
 
 let preloadedState
 const persistedTodosString = localStorage.getItem('todos')
@@ -11,6 +11,8 @@ if (persistedTodosString) {
   }
 }
 
-const store = createStore(rootReducer, preloadedState)
+const composedEnhancer = compose(sayHiOnDispatch, includeMeaningOfLife)
+
+const store = createStore(rootReducer, preloadedState, composedEnhancer)
 
 export default store
